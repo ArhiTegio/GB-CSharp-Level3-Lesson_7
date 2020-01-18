@@ -1,0 +1,62 @@
+﻿<Window x:Class="CinemaOffice.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CinemaOffice"
+        mc:Ignorable="d"
+        Title="Cinema Office" Height="450" Width="800" Loaded="MainWindow_OnLoaded">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Киносеансы">
+                <DockPanel>
+                    <ToolBarTray DockPanel.Dock="Top">
+                        <ToolBar>
+                            <Label Content="Киносеанс" />
+                            <TextBox x:Name="NameCinema"  Width="200"/>
+                            <Label Content="Время начала" />
+                            <DatePicker x:Name="DateStart" Width="200" SelectedDateFormat="Short" DisplayDate="01/17/2020 20:00:00"/>
+                            <Button Content="Добавить" Click="ButtonBase_OnClick_Add"/>
+                            <Button Content="Удалить" Click="ButtonBase_OnClick_Del"/>
+                        </ToolBar>
+                    </ToolBarTray>
+                    <DataGrid x:Name="DataCinema" ItemsSource="{Binding MoviesSet.Local}"
+                              AutoGenerateColumns="False" SelectionMode="Single" CellEditEnding="DataCinema_CellEditEnding" Margin="0,2,0,-2"  >>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="#" Binding="{Binding MovieId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
+                            <DataGridTextColumn Header="Время начала" Binding="{Binding StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Билеты">
+                <DockPanel>
+                    <ToolBarTray DockPanel.Dock="Top">
+                        <ToolBar>
+                            <Label Content="Киносеанс" />
+                            <ComboBox x:Name="CinemaCombo" Width="150" ItemsSource="{Binding MoviesSet.Local}" DisplayMemberPath="Name" SelectedValuePath="MovieId"/>
+                            <Label Content="Время начала" />
+                            <DatePicker x:Name="DateStart_Tikets" Width="150" SelectedDateFormat="Short" DisplayDate="01/17/2020 20:00:00"/>
+                            <Label Content="Кол."/>
+                            <TextBox x:Name="CountTikets" Width="50"/>
+                            <Button Content="Добавить" Click="ButtonBase_OnClick_TiketsAdd"/>
+                            <Button Content="Удалить" Click="ButtonBase_OnClick_TiketsDel"/>
+                        </ToolBar>
+
+                    </ToolBarTray>
+                    <DataGrid x:Name="DataTikets" ItemsSource="{Binding TiketsSet.Local}"
+                              AutoGenerateColumns="False" SelectionMode="Single" CellEditEnding="DataCinema_CellEditEnding"  Margin="0,2,0,-2"  >>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="#" Binding="{Binding TiketsId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding MoviesID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
+                            <DataGridTextColumn Header="Время начала" Binding="{Binding Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                            <DataGridTextColumn Header="Кол." Binding="{Binding Count, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                            </DataGrid.Columns>
+                    </DataGrid>
+
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
